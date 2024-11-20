@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { z } from "zod";
-
-const emailSchema = z.string().email();
+import { useNavigate } from "react-router-dom";
+const emailSchema = z.string().email("Некорректный email");
 const passwordSchema = z
   .string()
   .min(8, { message: "Пароль должен содержать не менее 8 символов" })
@@ -22,9 +22,11 @@ const RegistrationForm = () => {
 
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let validationErrors = {};
+
     try {
       emailSchema.parse(formData.email);
     } catch (error) {
@@ -48,16 +50,17 @@ const RegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const userId = Date.now(); // Уникальный идентификатор
-      const createdAt = new Date().toISOString(); // Дата создания
-      console.log({ ...formData, userId, createdAt });
+      const userId = Date.now();
+      const createdAt = new Date().toISOString();
+      const userData = { ...formData, userId, createdAt };
+      localStorage.setItem("user", JSON.stringify(userData));
       setSuccessMessage("Регистрация успешна!");
-    }
-  };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(formData);
+      navigate("/home");
+
+      setFormData({ email: "", password: "", confirmPassword: "" });
+      setErrors({});
+    }
   };
 
   return (
@@ -102,7 +105,7 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      <button type="submit" onClick={(e) => handleClick(e)} className="bg-blue-500 text-white px-4 py-2">
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2">
         Зарегистрироваться
       </button>
 
