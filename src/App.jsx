@@ -6,9 +6,8 @@ import Footer from "./components/footer/Footer";
 function App() {
   useEffect(() => {
     const getPosts = async () => {
-      const res = await fetch('http://localhost:3000/posts');
+      const res = await fetch("http://localhost:3000/posts");
       const data = await res.json();
-      console.log(data);
     };
 
     getPosts();
