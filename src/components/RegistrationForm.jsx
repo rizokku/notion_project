@@ -55,6 +55,11 @@ const RegistrationForm = () => {
     }
   };
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4">
       <h2 className="text-xl mb-4">Регистрация</h2>
@@ -97,7 +102,7 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+      <button type="submit" onClick={(e) => handleClick(e)} className="bg-blue-500 text-white px-4 py-2">
         Зарегистрироваться
       </button>
 
