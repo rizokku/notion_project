@@ -6,6 +6,10 @@ import Footer from "./components/footer/Footer";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Notes from "./components/Notes";
+import CreateNote from "./components/CreateNote";
+import EditNote from "./components/EditNote";
+import ViewNote from "./components/ViewNote";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -17,11 +21,14 @@ function App() {
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/home" element={<Home />} />
             <Route path="/notes" element={<Notes />} />
+            <Route path="/create-note" element={<CreateNote />} />
+            <Route path="/edit-note/:id" element={<EditNote />} />
+            <Route path="/view-note/:id" element={<ViewNote />} />
             <Route
               path="/"
               element={
-                <h1 className="text-2xl">
-                  Добро пожаловать! Пожалуйста,{" "}
+                <h1 className="text-2xl text-center">
+                  Добро пожаловать в "DemoNotion"! Пожалуйста,{" "}
                   <a href="/login" className="text-blue-500">
                     войдите
                   </a>{" "}
@@ -33,9 +40,9 @@ function App() {
                 </h1>
               }
             />
+            <Route path="*" element={<ErrorPage />} />{" "}
           </Routes>
         </div>
-        <Footer />
       </div>
     </Router>
   );
