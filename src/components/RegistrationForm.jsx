@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import { registrationUser } from "../utils/RegistrationUser";
+import { checkDublicateUsers } from "../utils/CheckDublicate";
 const emailSchema = z.string().email("Некорректный email");
 const passwordSchema = z
   .string()
@@ -47,13 +49,19 @@ const RegistrationForm = () => {
     return Object.keys(validationErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       const userId = Date.now();
       const createdAt = new Date().toISOString();
-      const userData = { ...formData, userId, createdAt };
+      const userData = { email: formData.email, userId, createdAt };
       localStorage.setItem("user", JSON.stringify(userData));
+      const check = await checkDublicateUsers(formData.email);
+      if (check) {
+        setErrors({ email: "Пользователь с таким email уже существует" });
+        return;
+      }
+      registrationUser({ email: formData.email, password: formData.password });
       setSuccessMessage("Регистрация успешна!");
 
       navigate("/home");
@@ -108,6 +116,9 @@ const RegistrationForm = () => {
       <button type="submit" className="bg-blue-500 text-white px-4 py-2">
         Зарегистрироваться
       </button>
+
+      <br />
+      <a href="/login">Есть аккаунт? <span className="underline text-blue-500">Войдите</span></a>
 
       {successMessage && (
         <p className="text-green-500 mt-4">{successMessage}</p>

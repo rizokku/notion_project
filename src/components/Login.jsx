@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../utils/LoginUser";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,20 +12,15 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (
-      storedUser &&
-      storedUser.email === formData.email &&
-      storedUser.password === formData.password
-    ) {
-      navigate("/home");
-    } else {
-      setError("Неверный email или пароль");
+    try {
+      loginUser({ email: formData.email, password: formData.password }).then(() => {
+        localStorage.setItem("user", JSON.stringify({ email: formData.email }));
+        navigate('/home');
+      });
+    } catch (e) {
+      setError("Неправильные данные");
     }
   };
-
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4">
       <h2 className="text-xl mb-4">Вход</h2>
@@ -54,6 +50,8 @@ const Login = () => {
       <button type="submit" className="bg-blue-500 text-white px-4 py-2">
         Войти
       </button>
+      <br />
+      <a href="/register">Нету аккаунта? <span className="underline text-blue-500">Зарегистрируйтесь</span></a>
     </form>
   );
 };
