@@ -1,3 +1,5 @@
+// Допы: Хранить пароли в базе в захешированном виде
+// Провека на дубликат (при регистрации)
 import React from "react";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -14,7 +16,7 @@ import ErrorPage from "./components/ErrorPage";
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen bg-gray-100">
         <div className="flex-grow flex items-center justify-center">
           <Routes>
             <Route path="/login" element={<Login />} />

@@ -2,7 +2,7 @@ import { sha256 } from "crypto-hash";
 
 export const registrationUser = async ({ email, password, id }) => {
   try {
-    const response = await fetch('http://localhost:3000/users', {
+    const response = await fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export const registrationUser = async ({ email, password, id }) => {
       body: JSON.stringify({
         id,
         email,
-        password: await sha256(password)
+        password: await sha256(password),
       }),
     });
 

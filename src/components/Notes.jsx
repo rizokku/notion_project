@@ -28,7 +28,6 @@ const Notes = () => {
 
   return (
     <div className="flex flex-col min-h-screen items-center pt-20">
-      {" "}
       <NavBar />
       <h1 className="text-2xl mb-4">Мои заметки</h1>
       <Link to="/create-note" className="mb-4 text-blue-500">

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { registrationUser } from "../utils/RegistrationUser";
 import { checkDublicateUsers } from "../utils/CheckDublicate";
+import Footer from "./footer/Footer";
+
 const emailSchema = z.string().email("Некорректный email");
 const passwordSchema = z
   .string()
@@ -21,7 +23,6 @@ const RegistrationForm = () => {
     password: "",
     confirmPassword: "",
   });
-
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
@@ -52,19 +53,28 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const userId = Date.now();
-      const createdAt = new Date().toISOString();
-      const userData = { email: formData.email, userId, createdAt };
-      localStorage.setItem("user", JSON.stringify(userData));
       const check = await checkDublicateUsers(formData.email);
       if (check) {
         setErrors({ email: "Пользователь с таким email уже существует" });
         return;
       }
-      registrationUser({ email: formData.email, password: formData.password });
-      setSuccessMessage("Регистрация успешна!");
 
-      navigate("/home");
+      const userId = Date.now();
+      const createdAt = new Date().toISOString();
+      const userData = { email: formData.email, userId, createdAt };
+
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      try {
+        await registrationUser({
+          email: formData.email,
+          password: formData.password,
+        });
+        setSuccessMessage("Регистрация успешна!");
+        navigate("/home");
+      } catch (error) {
+        setErrors({ email: "Ошибка регистрации. Попробуйте еще раз." });
+      }
 
       setFormData({ email: "", password: "", confirmPassword: "" });
       setErrors({});
@@ -84,7 +94,6 @@ const RegistrationForm = () => {
         />
         {errors.email && <p className="text-red-500">{errors.email}</p>}
       </div>
-
       <div className="mb-4">
         <label className="block mb-1">Пароль</label>
         <input
@@ -97,7 +106,6 @@ const RegistrationForm = () => {
         />
         {errors.password && <p className="text-red-500">{errors.password}</p>}
       </div>
-
       <div className="mb-4">
         <label className="block mb-1">Повторите пароль</label>
         <input
@@ -112,17 +120,17 @@ const RegistrationForm = () => {
           <p className="text-red-500">{errors.confirmPassword}</p>
         )}
       </div>
-
       <button type="submit" className="bg-blue-500 text-white px-4 py-2">
         Зарегистрироваться
       </button>
-
       <br />
-      <a href="/login">Есть аккаунт? <span className="underline text-blue-500">Войдите</span></a>
-
+      <a href="/login">
+        Есть аккаунт? <span className="underline text-blue-500">Войдите</span>
+      </a>
       {successMessage && (
         <p className="text-green-500 mt-4">{successMessage}</p>
       )}
+      <Footer />
     </form>
   );
 };
