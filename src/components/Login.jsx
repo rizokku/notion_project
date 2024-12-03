@@ -1,3 +1,4 @@
+// Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../utils/LoginUser";
@@ -14,12 +15,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!formData.email || !formData.password) {
       setError("Пожалуйста, заполните все поля");
       return;
     }
-
     setLoading(true);
     try {
       await loginUser({ email: formData.email, password: formData.password });

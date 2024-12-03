@@ -1,3 +1,4 @@
+// CreateNote.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
@@ -11,18 +12,15 @@ const CreateNote = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!title.trim()) {
       setError("Название заметки не может быть пустым.");
       return;
     }
-
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       setError("Пользователь не найден.");
       return;
     }
-
     const newNote = {
       id: Date.now(),
       title: title.trim(),
@@ -30,11 +28,9 @@ const CreateNote = () => {
       createdAt: new Date().toISOString(),
       userId: user.id,
     };
-
     const existingNotes = JSON.parse(localStorage.getItem("notes")) || [];
     existingNotes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(existingNotes));
-
     navigate(`/view-note/${newNote.id}`);
   };
 

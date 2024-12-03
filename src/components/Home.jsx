@@ -1,10 +1,10 @@
+// Home.jsx
 import React from "react";
 import NavBar from "./NavBar";
 import Footer from "./footer/Footer";
 
 const Home = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <NavBar />

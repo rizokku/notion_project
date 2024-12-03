@@ -1,3 +1,4 @@
+// RegistrationForm.jsx
 import React, { useState } from "react";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
@@ -29,23 +30,19 @@ const RegistrationForm = () => {
 
   const validateForm = () => {
     let validationErrors = {};
-
     try {
       emailSchema.parse(formData.email);
     } catch (error) {
       validationErrors.email = error.errors[0].message;
     }
-
     try {
       passwordSchema.parse(formData.password);
     } catch (error) {
       validationErrors.password = error.errors[0].message;
     }
-
     if (formData.password !== formData.confirmPassword) {
       validationErrors.confirmPassword = "Пароли не совпадают";
     }
-
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
@@ -58,13 +55,10 @@ const RegistrationForm = () => {
         setErrors({ email: "Пользователь с таким email уже существует" });
         return;
       }
-
       const userId = Date.now();
       const createdAt = new Date().toISOString();
       const userData = { email: formData.email, userId, createdAt };
-
       localStorage.setItem("user", JSON.stringify(userData));
-
       try {
         await registrationUser({
           email: formData.email,
@@ -75,7 +69,6 @@ const RegistrationForm = () => {
       } catch (error) {
         setErrors({ email: "Ошибка регистрации. Попробуйте еще раз." });
       }
-
       setFormData({ email: "", password: "", confirmPassword: "" });
       setErrors({});
     }

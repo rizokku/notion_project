@@ -1,3 +1,4 @@
+// App.jsx
 // Допы: Хранить пароли в базе в захешированном виде
 // Провека на дубликат (при регистрации)
 import React from "react";
@@ -42,7 +43,7 @@ function App() {
                 </h1>
               }
             />
-            <Route path="*" element={<ErrorPage />} />{" "}
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </div>
       </div>

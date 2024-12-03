@@ -1,3 +1,4 @@
+// EditNote.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
@@ -29,13 +30,11 @@ const EditNote = () => {
       setError("Название заметки не может быть пустым.");
       return;
     }
-
     const updatedNote = { ...note, title: title.trim(), body: body.trim() };
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const updatedNotes = notes.map((n) =>
       n.id === updatedNote.id ? updatedNote : n
     );
-
     localStorage.setItem("notes", JSON.stringify(updatedNotes));
     navigate(`/view-note/${updatedNote.id}`);
   };

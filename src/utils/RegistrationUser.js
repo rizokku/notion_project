@@ -1,3 +1,4 @@
+// RegistrationUser.js
 import { sha256 } from "crypto-hash";
 
 export const registrationUser = async ({ email, password, id }) => {
@@ -13,9 +14,7 @@ export const registrationUser = async ({ email, password, id }) => {
         password: await sha256(password),
       }),
     });
-
     const data = await response.json();
-
     return data;
   } catch (e) {
     return null;
