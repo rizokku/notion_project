@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../utils/LoginUser";
@@ -21,9 +20,16 @@ const Login = () => {
     }
     setLoading(true);
     try {
-      await loginUser({ email: formData.email, password: formData.password });
-      const updatedUser = {
+      const user = await loginUser({
         email: formData.email,
+        password: formData.password,
+      });
+      if (!user) {
+        setError("Неправильные данные");
+        return;
+      }
+      const updatedUser = {
+        email: user.email,
         lastLogin: new Date().toISOString(),
       };
       localStorage.setItem("user", JSON.stringify(updatedUser));

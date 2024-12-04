@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./footer/Footer";
@@ -6,7 +6,9 @@ import Footer from "./footer/Footer";
 const Notes = () => {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedUser = useMemo(() => {
+    return JSON.parse(localStorage.getItem("user"));
+  }, []);
 
   useEffect(() => {
     const userNotes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -18,7 +20,7 @@ const Notes = () => {
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
     setNotes(userFilteredNotes);
-  }, [storedUser]);
+  }, []);
 
   const handleDelete = (id) => {
     const updatedNotes = notes.filter((note) => note.id !== id);

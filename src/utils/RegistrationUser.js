@@ -1,4 +1,3 @@
-// RegistrationUser.js
 import { sha256 } from "crypto-hash";
 
 export const registrationUser = async ({ email, password, id }) => {
