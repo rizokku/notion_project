@@ -30,6 +30,7 @@ const Login = () => {
       }
       const updatedUser = {
         email: user.email,
+        createdAt: user.createdAt,
         lastLogin: new Date().toISOString(),
       };
       localStorage.setItem("user", JSON.stringify(updatedUser));

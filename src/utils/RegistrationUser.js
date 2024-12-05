@@ -1,6 +1,6 @@
 import { sha256 } from "crypto-hash";
 
-export const registrationUser = async ({ email, password, id }) => {
+export const registrationUser = async ({ email, password, id, createdAt }) => {
   try {
     const response = await fetch("http://localhost:3000/users", {
       method: "POST",
@@ -11,6 +11,8 @@ export const registrationUser = async ({ email, password, id }) => {
         id,
         email,
         password: await sha256(password),
+        createdAt,
+        notes: []
       }),
     });
     const data = await response.json();

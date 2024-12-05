@@ -63,6 +63,7 @@ const RegistrationForm = () => {
         await registrationUser({
           email: formData.email,
           password: formData.password,
+          createdAt
         });
         setSuccessMessage("Регистрация успешна!");
         navigate("/home");

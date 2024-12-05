@@ -4,10 +4,8 @@ export const loginUser = async ({ email, password }) => {
   try {
     const hashedPassword = await sha256(password);
     const response = await fetch(`http://localhost:3000/users?email=${email}`);
-    // if (!response.ok) {
-    //   throw new Error("Неправильные данные");
-    // }
     const users = await response.json();
+    console.log(users);
     if (users.length === 0) {
       return null;
     }

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./footer/Footer";
+import { saveNotes } from "../utils/SaveNotes";
 
 const CreateNote = () => {
   const [title, setTitle] = useState("");
@@ -10,7 +11,7 @@ const CreateNote = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim()) {
       setError("Название заметки не может быть пустым.");
@@ -28,6 +29,7 @@ const CreateNote = () => {
       createdAt: new Date().toISOString(),
       userId: user.id,
     };
+    await saveNotes(user, newNote);
     const existingNotes = JSON.parse(localStorage.getItem("notes")) || [];
     existingNotes.push(newNote);
     localStorage.setItem("notes", JSON.stringify(existingNotes));
