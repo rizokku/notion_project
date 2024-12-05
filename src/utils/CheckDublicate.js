@@ -1,4 +1,3 @@
-// CheckDublicate.js
 export const checkDublicateUsers = async (checkData) => {
   const response = await fetch(
     `http://localhost:3000/users/?email=${checkData}`

@@ -1,4 +1,3 @@
-// RegistrationForm.jsx
 import React, { useState } from "react";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +62,7 @@ const RegistrationForm = () => {
         await registrationUser({
           email: formData.email,
           password: formData.password,
-          createdAt
+          createdAt,
         });
         setSuccessMessage("Регистрация успешна!");
         navigate("/home");

@@ -12,7 +12,7 @@ export const registrationUser = async ({ email, password, id, createdAt }) => {
         email,
         password: await sha256(password),
         createdAt,
-        notes: []
+        notes: [],
       }),
     });
     const data = await response.json();
