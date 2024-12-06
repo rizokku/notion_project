@@ -1,32 +1,29 @@
 import { useEffect, useState, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
-import Footer from "./footer/Footer";
+import { Link } from "react-router-dom";
+import NavBar from "../Layout/NavBar";
+import Footer from "../Layout/Footer";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const Notes = () => {
   const [notes, setNotes] = useState([]);
-  const navigate = useNavigate();
-  const storedUser = useMemo(() => {
-    return JSON.parse(localStorage.getItem("user"));
-  }, []);
 
   useEffect(() => {
     const userNotes = JSON.parse(localStorage.getItem("notes")) || [];
-    const userFilteredNotes = userNotes.filter(
-      (note) => note.userId === storedUser.id
-    );
-
-    userFilteredNotes.sort(
+    const userFilteredNotes = userNotes.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     );
+
+    console.log(userFilteredNotes);
     setNotes(userFilteredNotes);
   }, []);
 
   const handleDelete = (id) => {
     const updatedNotes = notes.filter((note) => note.id !== id);
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    LocalStorage([{ field: "notes", data: updatedNotes }]);
     setNotes(updatedNotes);
   };
+
+  console.log(notes);
 
   return (
     <div className="flex flex-col min-h-screen items-center pt-20">

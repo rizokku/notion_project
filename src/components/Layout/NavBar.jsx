@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const Navbar = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    LocalStorage.deleteFields(['user', 'notes']);
     navigate("/login");
   };
 

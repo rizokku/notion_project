@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import { registrationUser } from "../utils/RegistrationUser";
-import { checkDublicateUsers } from "../utils/CheckDublicate";
-import Footer from "./footer/Footer";
+import { registrationUser } from "../../utils/user/RegistrationUser";
+import { checkDublicateUsers } from "../../utils/CheckDublicate";
+import Footer from "../Layout/Footer";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const emailSchema = z.string().email("Некорректный email");
 const passwordSchema = z
@@ -57,7 +58,7 @@ const RegistrationForm = () => {
       const userId = Date.now();
       const createdAt = new Date().toISOString();
       const userData = { email: formData.email, userId, createdAt };
-      localStorage.setItem("user", JSON.stringify(userData));
+      LocalStorage.saveFields([{ field: "user", data: userData }]);
       try {
         await registrationUser({
           email: formData.email,

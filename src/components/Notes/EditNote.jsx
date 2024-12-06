@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import NavBar from "./NavBar";
-import Footer from "./footer/Footer";
+import NavBar from "../Layout/NavBar";
+import Footer from "../Layout/Footer";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const EditNote = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const EditNote = () => {
     const updatedNotes = notes.map((n) =>
       n.id === updatedNote.id ? updatedNote : n
     );
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    LocalStorage.saveFields([{ field: "notes", data: updatedNotes }]);
     navigate(`/view-note/${updatedNote.id}`);
   };
 

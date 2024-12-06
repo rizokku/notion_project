@@ -1,0 +1,109 @@
+.containerWelcomePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+.welcomeText {
+  position: relative;
+  width: 1000px;
+  animation: initAnimation .7s ease-in-out;
+}
+
+.welcomeText,
+.notionText {
+  text-align: left;
+  font-size: 62px;
+  font-weight: 800;
+  color: #717171;
+}
+
+.notionText {
+  position: absolute;
+  color: #ff0000;
+  right: 10%;
+  animation: initAnimation .7s ease-in-out;
+}
+
+.textPriority {
+  color: #a1a1a1;
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  animation: glowing 1s infinite;
+}
+
+.buttonsSelect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loginButton,
+.registrationButton {
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  border-radius: 18px;
+  padding: 6px;
+  text-align: center;
+  transition: all .7s;
+}
+
+.loginButton:hover,
+.registrationButton:hover {
+  box-shadow: none;
+}
+
+.loginButton:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+.registrationButton:hover {
+  border: 1px solid #b424e4;
+  background: #4c4c4c;
+  color: #ffffff;
+}
+
+.loginButton {
+  color: #fff;
+  background: #4c4c4c;
+  border: 1px solid #2477e4;
+  box-shadow: 0 0 5px 1px #2477e4;
+}
+
+.registrationButton {
+  border: 1px solid #2477e4;
+  box-shadow: 0 0 5px 1px #b424e4;
+}
+
+@keyframes initAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowing {
+  from,
+  to {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .7;
+  }
+}

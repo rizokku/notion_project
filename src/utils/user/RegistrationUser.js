@@ -16,6 +16,7 @@ export const registrationUser = async ({ email, password, id, createdAt }) => {
       }),
     });
     const data = await response.json();
+    localStorage.removeItem('notes');
     return data;
   } catch (e) {
     return null;

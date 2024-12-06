@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "./NavBar";
-import Footer from "./footer/Footer";
+import Navbar from "./Layout/NavBar";
+import Footer from "./Layout/Footer";
 
 const Home = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <NavBar />
+      <Navbar />
       <div className="flex-grow flex flex-col items-center pt-20">
         <h1 className="text-3xl font-bold mb-6">Моя страничка</h1>
         {storedUser ? (

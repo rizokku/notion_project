@@ -1,11 +1,11 @@
-import { getUser } from "./GetUser";
+import { LocalStorage } from "../localstorage/localStorageClass";
+import { getUser } from "../user/GetUser";
 
 export const saveNotes = async (person, note) => {
   const user = await getUser(person.email);
 
-  if (!user || user.length === 0) {
-    throw new Error("Пользователь не найден");
-  }
+  if (!user || user.length === 0) throw new Error("Пользователь не найден");
+
   const newNote = {
     id: Date.now(),
     title: note.title,
@@ -13,27 +13,20 @@ export const saveNotes = async (person, note) => {
     createdAt: new Date().toISOString(),
   };
 
-  const notesToSave = user[0].notes ? [...user[0].notes, newNote] : [newNote];
-
   const response = await fetch(`http://localhost:3000/users/${user[0].id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      notes: notesToSave,
+      notes: [...user[0].notes, newNote],
     }),
   });
 
-  // if (!response.ok) {
-  //   throw new Error("Ошибка при обновлении заметок");
-  // }
-
   const updatedUser = await response.json();
 
-  localStorage.setItem("user", JSON.stringify(updatedUser));
+  LocalStorage.saveFields([{ field: "user", data: updatedUser }]);
 
-  console.log(updatedUser);
 };
 
 // попытктка раз
@@ -62,7 +55,6 @@ export const saveNotes = async (person, note) => {
 
 //   localStorage.setItem("user", JSON.stringify(updatedUser));
 
-//   console.log(updatedUser);
 // };
 
 //старый код
@@ -79,5 +71,4 @@ export const saveNotes = async (person, note) => {
 //       notes: [...user[0].notes, note],
 //     }),
 //   });
-//   console.log(await response.json());
 // };

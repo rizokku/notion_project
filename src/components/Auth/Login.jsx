@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../utils/LoginUser";
-import Footer from "./footer/Footer";
+import { loginUser } from "../../utils/user/LoginUser";
+import Footer from "../Layout/Footer";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -29,11 +30,13 @@ const Login = () => {
         return;
       }
       const updatedUser = {
-        email: user.email,
-        createdAt: user.createdAt,
+        ...user,
         lastLogin: new Date().toISOString(),
       };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      LocalStorage.saveFields([
+        { field: "user", data: updatedUser },
+        { field: 'notes', data: user.notes }
+      ]);
       navigate("/home");
     } catch (e) {
       setError("Неправильные данные");

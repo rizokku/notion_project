@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
-import Footer from "./footer/Footer";
-import { saveNotes } from "../utils/SaveNotes";
+import NavBar from "../Layout/NavBar";
+import Footer from "../Layout/Footer";
+import { saveNotes } from "../../utils/notes/SaveNotes";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const CreateNote = () => {
   const [title, setTitle] = useState("");
@@ -31,7 +32,7 @@ const CreateNote = () => {
     await saveNotes(user, newNote);
     const existingNotes = JSON.parse(localStorage.getItem("notes")) || [];
     existingNotes.push(newNote);
-    localStorage.setItem("notes", JSON.stringify(existingNotes));
+    LocalStorage.saveFields([{ field: "notes", data: existingNotes }]);
     navigate(`/view-note/${newNote.id}`);
   };
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import NavBar from "./NavBar";
-import Footer from "./footer/Footer";
+import NavBar from "../Layout/NavBar";
+import Footer from "../Layout/Footer";
+import { LocalStorage } from "../../utils/localstorage/localStorageClass";
 
 const ViewNote = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const ViewNote = () => {
   const handleDelete = () => {
     const notes = JSON.parse(localStorage.getItem("notes")) || [];
     const updatedNotes = notes.filter((note) => note.id !== parseInt(id));
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    LocalStorage.saveFields([{ field: "notes", data: updatedNotes }]);
     navigate("/notes");
   };
 
