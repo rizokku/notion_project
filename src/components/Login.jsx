@@ -77,7 +77,7 @@ const Login = () => {
       </button>
       <br />
       <a href="/register">
-        Нету аккаунта?{" "}
+        Нет аккаунта?{" "}
         <span className="underline text-blue-500">Зарегистрируйтесь</span>
       </a>
       <Footer />
