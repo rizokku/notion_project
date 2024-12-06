@@ -19,9 +19,14 @@ const Notes = () => {
 
   const handleDelete = (id) => {
     const updatedNotes = notes.filter((note) => note.id !== id);
-    LocalStorage([{ field: "notes", data: updatedNotes }]);
+    LocalStorage.setItem("notes", updatedNotes); // Убедитесь, что данные правильно сохраняются
     setNotes(updatedNotes);
   };
+  // const handleDelete = (id) => {
+  //   const updatedNotes = notes.filter((note) => note.id !== id);
+  //   LocalStorage([{ field: "notes", data: updatedNotes }]);
+  //   setNotes(updatedNotes);
+  // };
 
   console.log(notes);
 

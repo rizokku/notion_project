@@ -1,3 +1,4 @@
+//порт 3001 для Сергея Александровича
 // Допы: Хранить пароли в базе в захешированном виде
 // Провека на дубликат (при регистрации)
 import React from "react";
@@ -26,10 +27,7 @@ function App() {
       <Route path="/create-note" element={<CreateNote />} />
       <Route path="/edit-note/:id" element={<EditNote />} />
       <Route path="/view-note/:id" element={<ViewNote />} />
-      <Route
-        path="/"
-        element={<WelcomePage />}
-      />
+      <Route path="/" element={<WelcomePage />} />
       <Route path="*" element={<ErrorPage />} />
     </Wrapper>
   );
